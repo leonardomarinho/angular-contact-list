@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html ng-app="contactList">
+<head>
+	<meta charset="UTF-8">
+	<title>Contact List</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/app.css">
+	<script src="lib/angular.js"></script>
+	<script src="lib/angular-messages.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/controllers/contactListCtrl.js"></script>
+</head>
+<body ng-controller="contactListCtrl">
+	<div class="jumbotron">
+		<h3>{{appName}}</h3>
+		<input type="text" ng-model="searchString" placeholder="Search">
+		<table class="table">
+			<thead>
+				<tr>
+					<th></th>
+					<th class="table-header"><a href="" ng-click="orderBy('name')">Name</a></th>
+					<th class="table-header"><a href="" ng-click="orderBy('phone')">Phone</a></th>
+					<th class="table-header"><a href="" ng-click="orderBy('carrier')">Carrier</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-class="{selected: contact.selected}" ng-repeat="contact in contacts | filter: searchString | orderBy:orderByCriteria:direction">
+					<td><input type="checkbox" ng-model="contact.selected"/></td>
+					<td>{{contact.name}}</td>
+					<td>{{contact.phone}}</td>
+					<td>{{contact.carrier.name}}</td>
+				</tr>
+			</tbody>
+		</table>
+		<hr/>
+		<form name="contactForm">
+
+			<div ng-messages="contactForm.name.$error" ng-show="contactForm.name.$dirty">
+				<div class="alert alert-danger" ng-message="required">Please fill the name field.</div>
+
+				<div class="alert alert-danger" ng-message="minlength">Name must have at least 10 characters.</div>
+			</div>
+
+			<div ng-messages="contactForm.phone.$error" ng-show="contactForm.phone.$dirty">
+				<div class="alert alert-danger" ng-message="required">Please fill the phone field.</div>
+
+				<div class="alert alert-danger" ng-message="minlength">Phone must have at least 8 characters.</div>
+
+				<div class="alert alert-danger" ng-message="pattern">Phone must be 	formatted as "xxxx-xxxx".</div>
+			</div>
+
+			<input class="form-control" placeholder="Name" type="text" ng-model="contact.name" ng-required="true" ng-minlength="10" name="name">
+
+			<input class="form-control" placeholder="Phone" type="text" ng-model="contact.phone" ng-required="true" ng-minlength="8" ng-pattern="/^\d{4,5}-\d{4}$/" name="phone">
+			
+			<select class="form-control" ng-model="contact.carrier" ng-options="carrier.name group by carrier.category for carrier in carriers | orderBy:'name'" ng-required="true">
+				<option value="">Select a Carrier</option>
+			</select>
+		
+		</form>
+		
+		<button class="btn btn-primary" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
+		
+		<button class="btn btn-danger" ng-disabled="!isContactsSelected(contacts)" ng-click="deleteContacts(contacts)">Delete Contacts
+		</button>
+	</div>
+</body>
+</html>
