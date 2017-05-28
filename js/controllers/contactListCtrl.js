@@ -1,21 +1,14 @@
-angular.module("contactList").controller("contactListCtrl", function ($scope){
+angular.module("contactList").controller("contactListCtrl", function ($scope, contactService, carrierService, serialGenerator){
 	
 	$scope.appName = "Contact List";
 	$scope.selected = "selected";
 	$scope.orderByCriteria = "name";
-	$scope.contacts = [{name: "Pedro", phone: "9999-8888", carrier:{name:"Oi", code:"14"}},
-					   {name: "Ana", phone: "9999-7777", carrier:{name:"Vivo", code:"15"}},
-					   {name: "Maria", phone: "9999-5555", carrier:{name:"Tim", code:"41"}}];
-
-	$scope.carriers = [{name: "Oi", code:"14", category:"Cellphone"},
-						{name: "Vivo", code:"15", category:"Cellphone"},
-						{name: "Tim", code:"41", category:"Cellphone"},
-						{name: "Claro", code:"17", category:"Cellphone"},
-						{name: "GVT", code:"17", category:"Base"},
-						{name: "Net", code:"17", category:"Base"}];
+	$scope.contacts = contactService.getContacts();
+	$scope.carriers = carrierService.getCarriers();
 
 	$scope.addContact = function(contact){
-		$scope.contacts.push(angular.copy(contact));
+		contact.serial = serialGenerator.generate();
+		$scope.contacts = contactService.saveContact(contact);
 		delete $scope.contact;
 		$scope.contactForm.$setPristine();
 	};
@@ -29,10 +22,9 @@ angular.module("contactList").controller("contactListCtrl", function ($scope){
 	};
 
 	$scope.deleteContacts = function(contacts){
-		$scope.contacts = contacts.filter(function(contact){
-			if(!contact.selected) return contact;
-		});
+		$scope.contacts = contactService.deleteContacts(contacts);
 	};
+
 
 	$scope.isContactsSelected = function(contacts){
 		return contacts.some(function(contact){
