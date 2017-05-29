@@ -1,7 +1,7 @@
 angular.module("contactList").factory("contactService", function(serialGenerator){
-	var contactList = [{serial: serialGenerator.generate(), name: "Pedro", phone: "9999-8888", carrier:{name:"Oi", code:"14"}},
-					   {serial: serialGenerator.generate(), name: "Ana", phone: "9999-7777", carrier:{name:"Vivo", code:"15"}},
-					   {serial: serialGenerator.generate(), name: "Maria", phone: "9999-5555", carrier:{name:"Tim", code:"41"}}];
+	var contactList = [{serial: serialGenerator.generate(), name: "Pedro Gomes Silva", phone: "9999-8888", carrier:{name:"Oi", code:"14"}},
+					   {serial: serialGenerator.generate(), name: "Ana Luiza Romero", phone: "9999-7777", carrier:{name:"Vivo", code:"15"}},
+					   {serial: serialGenerator.generate(), name: "Maria Pinheiro Martins ", phone: "9999-5555", carrier:{name:"Tim", code:"41"}}];
 
 	var _getContacts = function(){
 		return contactList

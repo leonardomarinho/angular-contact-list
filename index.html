@@ -13,6 +13,8 @@
 	<script src="js/services/carrierService.js"></script>
 	<script src="js/services/serialGeneratorService.js"></script>
 	<script src="js/config/serialGeneratorConfig.js"></script>
+	<script src="js/filters/formatNameFilter.js"></script>
+	<script src="js/filters/ellipsisFilter.js"></script>
 </head>
 <body ng-controller="contactListCtrl">
 	<div class="jumbotron">
@@ -32,7 +34,7 @@
 				<tr ng-class="{selected: contact.selected}" ng-repeat="contact in contacts | filter: searchString | orderBy:orderByCriteria:direction">
 					<td><input type="checkbox" ng-model="contact.selected"/></td>
 					<td>{{contact.serial}}</td>
-					<td>{{contact.name}}</td>
+					<td>{{contact.name | formatName | ellipsis:20}}</td>
 					<td>{{contact.phone}}</td>
 					<td>{{contact.carrier.name}}</td>
 				</tr>
