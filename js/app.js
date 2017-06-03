@@ -1,1 +1,1 @@
-angular.module("contactList", ["ngMessages"]);
+angular.module("contactList", ["ngMessages", "serialGenerator", "uiDate", "ellipsis", "formatName"]);
