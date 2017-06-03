@@ -15,6 +15,8 @@
 	<script src="js/config/serialGeneratorConfig.js"></script>
 	<script src="js/filters/formatNameFilter.js"></script>
 	<script src="js/filters/ellipsisFilter.js"></script>
+	<script src="js/directives/uiDateDirective.js"></script>
+
 </head>
 <body ng-controller="contactListCtrl">
 	<div class="jumbotron">
@@ -41,6 +43,7 @@
 			</tbody>
 		</table>
 		<hr/>
+
 		<form name="contactForm">
 
 			<div ng-messages="contactForm.name.$error" ng-show="contactForm.name.$dirty">
@@ -60,6 +63,9 @@
 			<input class="form-control" placeholder="Name" type="text" ng-model="contact.name" ng-required="true" ng-minlength="10" name="name">
 
 			<input class="form-control" placeholder="Phone" type="text" ng-model="contact.phone" ng-required="true" ng-minlength="8" ng-pattern="/^\d{4,5}-\d{4}$/" name="phone">
+
+			<input class="form-control" placeholder="Date" type="text" ng-model="contact.date" ng-required="true" name="date" ui-date>
+
 			
 			<select class="form-control" ng-model="contact.carrier" ng-options="carrier.name group by carrier.category for carrier in carriers | orderBy:'name'" ng-required="true">
 				<option value="">Select a Carrier</option>
