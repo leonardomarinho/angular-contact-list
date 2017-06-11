@@ -1,0 +1,30 @@
+<div class="jumbotron">
+	<h3>{{appName}}</h3>
+	<input type="text" ng-model="searchString" placeholder="Search">
+	<table class="table">
+		<thead>
+			<tr>
+				<th></th>
+				<th class="table-header"><a href="" ng-click="orderBy('serial')">Serial</a></th>
+				<th class="table-header"><a href="" ng-click="orderBy('name')">Name</a></th>
+				<th class="table-header"><a href="" ng-click="orderBy('phone')">Phone</a></th>
+				<th class="table-header"><a href="" ng-click="orderBy('carrier')">Carrier</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-class="{selected: contact.selected}" ng-repeat="contact in contacts | filter: searchString | orderBy:orderByCriteria:direction">
+				<td><input type="checkbox" ng-model="contact.selected"/></td>
+				<td>{{contact.serial}}</td>
+				<td>{{contact.name | formatName | ellipsis:20}}</td>
+				<td>{{contact.phone}}</td>
+				<td>{{contact.carrier.name}}</td>
+			</tr>
+		</tbody>
+	</table>
+	<hr/>
+	
+	<a href="#!/newContact" class="btn btn-primary">New Contact</a>
+	
+	<button class="btn btn-danger" ng-disabled="!isContactsSelected(contacts)" ng-click="deleteContacts(contacts)">Delete Contacts
+	</button>
+</div>

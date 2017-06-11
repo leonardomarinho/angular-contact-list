@@ -1,0 +1,33 @@
+<div class="jumbotron">
+	<h3>New Contact</h3>
+	<form name="contactForm">
+
+		<div ng-messages="contactForm.name.$error" ng-show="contactForm.name.$dirty">
+			<div class="alert alert-danger" ng-message="required">Please fill the name field.</div>
+
+			<div class="alert alert-danger" ng-message="minlength">Name must have at least 10 characters.</div>
+		</div>
+
+		<div ng-messages="contactForm.phone.$error" ng-show="contactForm.phone.$dirty">
+			<div class="alert alert-danger" ng-message="required">Please fill the phone field.</div>
+
+			<div class="alert alert-danger" ng-message="minlength">Phone must have at least 8 characters.</div>
+
+			<div class="alert alert-danger" ng-message="pattern">Phone must be 	formatted as "xxxx-xxxx".</div>
+		</div>
+
+		<input class="form-control" placeholder="Name" type="text" ng-model="contact.name" ng-required="true" ng-minlength="10" name="name">
+
+		<input class="form-control" placeholder="Phone" type="text" ng-model="contact.phone" ng-required="true" ng-minlength="8" ng-pattern="/^\d{4,5}-\d{4}$/" name="phone">
+
+		<input class="form-control" placeholder="Date" type="text" ng-model="contact.date" ng-required="true" name="date" ui-date>
+		
+		<select class="form-control" ng-model="contact.carrier" ng-options="carrier.name group by carrier.category for carrier in carriers | orderBy:'name'" ng-required="true">
+			<option value="">Select a Carrier</option>
+		</select>
+
+		<button class="btn btn-primary" ng-click="addContact(contact)" ng-disabled="contactForm.$invalid">Add Contact</button>
+
+		<a href="#!/contacts" class="btn btn-primary">Cancel</a>
+	</form>
+</div>
